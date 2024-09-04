@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  <title>Comments</title>
+  <style>
+    	body{
+    		position: fixed;
+    		margin: 0;
+    		padding: 0;
+    	}
+
+		.main_content{
+			margin: 0;
+    		padding: 0;
+		}
+	</style>
+  <script type="text/javascript">
+
+
+  </script>
+</head>
+<body>
+
+<div class="main_content">
+  <form th:action="@{/apartments/comments}" method="Post" th:object="${comments}">
+
+
+    <input type="text" th:field="*{name}" class="form-control" id="apartmentsname" placeholder="Apartment's Name">
+
+
+    <input type="text" th:field="*{address}" class="form-control" id="apartmentsaddress" placeholder="Address">
+
+
+    <input type="text" th:field="*{city}"class="form-control" id="city" placeholder="City">
+
+
+    <select name="states" th:field="*{state}" id="states" class="form-control">
+      <option value="AL">Alabama</option>
+
+    </select>
+
+
+    <input type="text" th:field="*{comment}"class="form-control" id="comments" placeholder="Comments">
+
+
+    <input type="text" th:field="*{rating}"class="form-control" id="rating" placeholder="Rating">
+
+
+    <input type="submit" class="form-control"  value="SUBMIT">
+
+  </form>
+</div>
+
+
+
+</body>
+</html>

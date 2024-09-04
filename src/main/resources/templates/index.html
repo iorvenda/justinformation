@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Capture and Upload Image</title>
+</head>
+<body>
+<h1>Capture and Upload Image</h1>
+<video id="video" width="640" height="480" autoplay></video>
+<button id="snap">Snap Photo</button>
+<canvas id="canvas" width="640" height="480"></canvas>
+<form id="uploadForm" method="post" enctype="multipart/form-data" th:action="@{/upload}">
+    <input type="hidden" name="file" id="file">
+    <button type="submit">Upload</button>
+</form>
+<p th:text="${message}"></p>
+<script>
+        (function() {
+            var video = document.getElementById('video');
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var snap = document.getElementById('snap');
+            var uploadForm = document.getElementById('uploadForm');
+            var fileInput = document.getElementById('file');
+
+            // Get access to the camera!
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                    video.srcObject = stream;
+                    video.play();
+                });
+            }
+
+            // Trigger photo take
+            snap.addEventListener('click', function() {
+                context.drawImage(video, 0, 0, 640, 480);
+                var dataURL = canvas.toDataURL('image/jpeg');
+                fileInput.value = dataURL;
+            });
+
+            // Convert dataURL to blob and append to FormData
+            uploadForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                var dataURL = fileInput.value;
+                var blob = dataURLToBlob(dataURL);
+                var formData = new FormData();
+                formData.append('file', blob, 'captured.jpg');
+
+                fetch(uploadForm.action, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.text()).then(data => {
+                    document.querySelector('p').innerText = data;
+                }).catch(error => {
+                    document.querySelector('p').innerText = 'File upload failed!';
+                });
+            });
+
+            function dataURLToBlob(dataURL) {
+                var binary = atob(dataURL.split(',')[1]);
+                var array = [];
+                for (var i = 0; i < binary.length; i++) {
+                    array.push(binary.charCodeAt(i));
+                }
+                return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
+            }
+        })();
+    </script>
+</body>
+</html>
+
