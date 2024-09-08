@@ -18,6 +18,7 @@ import java.util.List;
 @Controller
 @RestController
 @RequestMapping("/apartments")
+// add an api that sends confirmation that  data was saved
 public class ApartmentController {
     private static Logger logger = LoggerFactory.getLogger(ApartmentController.class );
     private final ApartmentService service;
