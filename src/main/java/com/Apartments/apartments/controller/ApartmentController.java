@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
-
+//
 @Controller
 @RestController
 @RequestMapping("/apartments")
@@ -22,6 +22,7 @@ import java.util.List;
 public class ApartmentController {
     private static Logger logger = LoggerFactory.getLogger(ApartmentController.class );
     private final ApartmentService service;
+
 
     @Autowired
     public ApartmentController(ApartmentService service) {
