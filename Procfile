@@ -1,1 +1,1 @@
-web: java -jar target/apartments.jar
+web: java -jar out/apartments.jar
